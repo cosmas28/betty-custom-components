@@ -13,7 +13,7 @@ export const options = {
   value: variable('Date', { value: [] }),
 
   dateFormat: variable('Date format', {
-    value: ['MM/dd/yyyy'],
+    value: [],
   }),
 
   useInnerHtml: toggle('Display Rich Text', {

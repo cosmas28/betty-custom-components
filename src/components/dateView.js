@@ -13,6 +13,8 @@
     const isPristine = isEmpty && isDev;
 
     const isValidDate = (date) => date instanceof Date && !isNaN(date);
+    const VALID_DATE_FORMATS = ['MM/dd/yyyy', 'dd/MM/yyyy', 'yyyy-MM-dd'];
+    const isValidDateFormat = (format) => VALID_DATE_FORMATS.includes(format)
 
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -42,7 +44,7 @@
     const formattedDate = isValidDate(convertedDate)
       ? DateFns.format(
           convertedDate || new Date(),
-          parsedDateFormat || 'MM/dd/yyyy',
+          isValidDateFormat(parsedDateFormat) ? parsedDateFormat : 'MM/dd/yyyy',
         )
       : parsedValue;
 

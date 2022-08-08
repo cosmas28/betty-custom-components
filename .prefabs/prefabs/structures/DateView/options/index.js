@@ -7,7 +7,7 @@ const styles_1 = require("./styles");
 exports.options = {
     value: component_sdk_1.variable('Date', { value: [] }),
     dateFormat: component_sdk_1.variable('Date format', {
-        value: ['MM/dd/yyyy'],
+        value: [],
     }),
     useInnerHtml: component_sdk_1.toggle('Display Rich Text', {
         value: false,
