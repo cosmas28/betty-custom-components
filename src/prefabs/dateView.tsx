@@ -3,7 +3,7 @@ import { Text } from './structures/DateView';
 import { options as baseOptions } from './structures/DateView/options';
 
 const attr = {
-  icon: Icon.TextInputIcon,
+  icon: Icon.TitleIcon,
   category: 'CONTENT',
   keywords: ['Content', 'text', 'type', 'typography', 'body', 'paragraph'],
 };

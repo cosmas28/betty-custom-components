@@ -5,7 +5,7 @@ const component_sdk_1 = require("@betty-blocks/component-sdk");
 const advanced_1 = require("./advanced");
 const styles_1 = require("./styles");
 exports.options = {
-    value: component_sdk_1.variable('Date', { value: [] }),
+    value: component_sdk_1.variable('Date', { value: [], configuration: { as: 'MULTILINE' }, }),
     dateFormat: component_sdk_1.variable('Date format', {
         value: [],
     }),

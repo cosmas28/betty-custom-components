@@ -10,7 +10,7 @@ import { advanced } from './advanced';
 import { styles } from './styles';
 
 export const options = {
-  value: variable('Date', { value: [] }),
+  value: variable('Date', { value: [], configuration: { as: 'MULTILINE' }, }),
 
   dateFormat: variable('Date format', {
     value: [],

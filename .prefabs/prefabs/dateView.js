@@ -4,7 +4,7 @@ const component_sdk_1 = require("@betty-blocks/component-sdk");
 const DateView_1 = require("./structures/DateView");
 const options_1 = require("./structures/DateView/options");
 const attr = {
-    icon: component_sdk_1.Icon.TextInputIcon,
+    icon: component_sdk_1.Icon.TitleIcon,
     category: 'CONTENT',
     keywords: ['Content', 'text', 'type', 'typography', 'body', 'paragraph'],
 };
