@@ -12,13 +12,12 @@ export interface Configuration {
   ref?: { id: string };
 }
 
-export const Button = (
+export const Text = (
   config: Configuration,
   descendants: PrefabReference[] = [],
 ) => {
   const options = { ...(config.options || defaults) };
   const style = { ...config.style };
   const ref = config.ref ? { ...config.ref } : undefined;
-
-  return component('Button', { options, style, ref }, descendants);
+  return component('Text', { options, ref, style }, descendants);
 };

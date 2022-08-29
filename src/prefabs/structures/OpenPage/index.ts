@@ -12,7 +12,7 @@ export interface Configuration {
   ref?: { id: string };
 }
 
-export const Button = (
+export const OpenPageButton = (
   config: Configuration,
   descendants: PrefabReference[] = [],
 ) => {

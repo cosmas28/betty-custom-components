@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.options = void 0;
 const component_sdk_1 = require("@betty-blocks/component-sdk");
+const advanced_1 = require("./advanced");
 exports.options = {
     visible: component_sdk_1.toggle('Toggle visibility', {
         value: true,
         configuration: {
             as: 'VISIBILITY',
-        }
+        },
     }),
     columnWidth: component_sdk_1.option('CUSTOM', {
         label: 'Column width',
@@ -31,8 +32,58 @@ exports.options = {
                 { name: '10', value: '10' },
                 { name: '11', value: '11' },
                 { name: '12', value: '12' },
-            ]
-        }
+            ],
+        },
+    }),
+    columnWidthTabletLandscape: component_sdk_1.option('CUSTOM', {
+        label: 'Column width (tablet landscape)',
+        value: 'flexible',
+        configuration: {
+            as: 'DROPDOWN',
+            dataType: 'string',
+            allowedInput: [
+                { name: 'Fit content', value: 'fitContent' },
+                { name: 'Flexible', value: 'flexible' },
+                { name: 'Hidden', value: 'hidden' },
+                { name: '1', value: '1' },
+                { name: '2', value: '2' },
+                { name: '3', value: '3' },
+                { name: '4', value: '4' },
+                { name: '5', value: '5' },
+                { name: '6', value: '6' },
+                { name: '7', value: '7' },
+                { name: '8', value: '8' },
+                { name: '9', value: '9' },
+                { name: '10', value: '10' },
+                { name: '11', value: '11' },
+                { name: '12', value: '12' },
+            ],
+        },
+    }),
+    columnWidthTabletPortrait: component_sdk_1.option('CUSTOM', {
+        value: 'flexible',
+        label: 'Column width (tablet portrait)',
+        configuration: {
+            as: 'DROPDOWN',
+            dataType: 'string',
+            allowedInput: [
+                { name: 'Fit content', value: 'fitContent' },
+                { name: 'Flexible', value: 'flexible' },
+                { name: 'Hidden', value: 'hidden' },
+                { name: '1', value: '1' },
+                { name: '2', value: '2' },
+                { name: '3', value: '3' },
+                { name: '4', value: '4' },
+                { name: '5', value: '5' },
+                { name: '6', value: '6' },
+                { name: '7', value: '7' },
+                { name: '8', value: '8' },
+                { name: '9', value: '9' },
+                { name: '10', value: '10' },
+                { name: '11', value: '11' },
+                { name: '12', value: '12' },
+            ],
+        },
     }),
     columnWidthMobile: component_sdk_1.option('CUSTOM', {
         value: 'flexible',
@@ -56,8 +107,29 @@ exports.options = {
                 { name: '10', value: '10' },
                 { name: '11', value: '11' },
                 { name: '12', value: '12' },
-            ]
-        }
+            ],
+        },
+    }),
+    columnHeight: component_sdk_1.text('Height', {
+        value: '',
+        configuration: {
+            as: 'UNIT',
+        },
+    }),
+    backgroundColor: component_sdk_1.color('Background color', { value: component_sdk_1.ThemeColor.TRANSPARENT }),
+    horizontalAlignment: component_sdk_1.option('CUSTOM', {
+        label: 'Horizontal Alignment',
+        value: 'inherit',
+        configuration: {
+            as: 'BUTTONGROUP',
+            dataType: 'string',
+            allowedInput: [
+                { name: 'None', value: 'inherit' },
+                { name: 'Left', value: 'flex-start' },
+                { name: 'Center', value: 'center' },
+                { name: 'Right', value: 'flex-end' },
+            ],
+        },
     }),
     verticalAlignment: component_sdk_1.option('CUSTOM', {
         label: 'Vertical Alignment',
@@ -70,22 +142,8 @@ exports.options = {
                 { name: 'Top', value: 'flex-start' },
                 { name: 'Center', value: 'center' },
                 { name: 'Bottom', value: 'flex-end' },
-            ]
-        }
-    }),
-    horizontalAlignment: component_sdk_1.option('CUSTOM', {
-        label: 'Horizontal Alignment',
-        value: 'inherit',
-        configuration: {
-            as: 'BUTTONGROUP',
-            dataType: 'string',
-            allowedInput: [
-                { name: 'None', value: 'inherit' },
-                { name: 'Left', value: 'flex-start' },
-                { name: 'Center', value: 'center' },
-                { name: 'Right', value: 'flex-end' },
-            ]
-        }
+            ],
+        },
     }),
     outerSpacing: component_sdk_1.sizes('Outer space', {
         value: ['0rem', '0rem', '0rem', '0rem'],
@@ -93,5 +151,5 @@ exports.options = {
     innerSpacing: component_sdk_1.sizes('Inner space', {
         value: ['M', 'M', 'M', 'M'],
     }),
-    backgroundColor: component_sdk_1.color('Background color', { value: component_sdk_1.ThemeColor.TRANSPARENT }),
+    ...advanced_1.advanced,
 };
