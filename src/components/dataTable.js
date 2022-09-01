@@ -6,23 +6,19 @@
   jsx: (() => {
     const {
       env,
-      getProperty,
       useAllQuery,
       useFilter,
       useRelation,
       useText,
     } = B;
-    const { Typography } = window.MaterialUI.Core;
     const isDev = env === 'dev';
     const {
       model,
       filter,
-      searchProperty,
       showError,
       dataComponentAttribute,
     } = options;
     const displayError = showError === 'built-in';
-    const [page, setPage] = useState(0);
 
     const skipAppend = useRef(false);
     const [skip, setSkip] = useState(0);
@@ -40,19 +36,9 @@
 
     const [interactionFilter, setInteractionFilter] = useState({});
 
-    const { label: searchPropertyLabel = '{property}', kind } =
-      getProperty(searchProperty) || {};
-
-    const [results, setResults] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [previousSearchTerm, setPreviousSearchTerm] = useState('');
-    const [newSearch, setNewSearch] = useState(false);
     const fetchingNextSet = useRef(false);
-    const history = isDev ? null : useHistory();
-
-    const toolbarRef = React.createRef();
-    const paginationRef = React.createRef();
-    const [stylesProps, setStylesProps] = useState(null);
 
     const deepMerge = (...objects) => {
       const isObject = (item) =>
@@ -74,11 +60,6 @@
         return accumulator;
       }, {});
     };
-
-    let path = [searchProperty].flat();
-    if (typeof searchProperty.id !== 'undefined') {
-      path = [searchProperty.id].flat();
-    }
 
     const transformValue = (value) => {
       if (value instanceof Date) {
@@ -106,14 +87,12 @@
         event.target ? event.target.value : transformValue(event),
       );
       setInteractionSearchProperty(property ? property.id : '');
-      setPage(0);
     });
 
     B.defineFunction('ResetFilter', () => {
       setInteractionFilter({});
       setInteractionSearchTerm('');
       setInteractionSearchProperty('');
-      setPage(0);
     });
 
     let interactionFilters = {};
@@ -143,23 +122,7 @@
     interactionFilters =
       clauses.length > 1 ? { _and: clauses } : clauses[0] || {};
 
-    const searchOperator =
-      kind === 'serial' || kind === 'integer' ? 'eq' : 'matches';
-
-    const searchFilter = searchProperty
-      ? path.reduceRight(
-          (acc, property, index) =>
-            index === path.length - 1
-              ? { [property]: { [searchOperator]: searchTerm } }
-              : { [property]: acc },
-          {},
-        )
-      : {};
-
-    const newFilter =
-      searchProperty && searchTerm !== ''
-        ? deepMerge(filter, searchFilter)
-        : filter;
+    const newFilter = filter;
 
     const completeFilter = deepMerge(newFilter, interactionFilters);
 
@@ -211,10 +174,8 @@
           setPreviousSearchTerm(searchTerm);
           setPreviousInteractionSearchTerm(interactionSearchTerm);
           setPreviousInteractionSearchProperty(interactionSearchProperty);
-          setNewSearch(true);
         } else {
           fetchingNextSet.current = false;
-          setNewSearch(false);
         }
         skipAppend.current = false;
         setTotalCount(data.totalCount);
@@ -230,12 +191,6 @@
         clearTimeout(handler);
       };
     }, [search]);
-
-    function clearResults() {
-      setTimeout(() => {
-        setSkip(0);
-      }, 0);
-    }
 
     B.defineFunction('Refetch', () => {
       refetch();
@@ -256,25 +211,28 @@
       }
     }, [loading]);
 
-    const isRelation = !isDev && typeof model !== 'string';
-
     return (
       <div
         className={classes.root}
-        data-component={useText(dataComponentAttribute) || 'DataTable'}
+        data-component={useText(dataComponentAttribute) || 'DataCount'}
       >
-        <Typography variant="caption" display="block" gutterBottom>
-          {totalCount}
-        </Typography>
+        {totalCount}
       </div>
     );
   })(),
   styles: (B) => (theme) => {
     const { env, mediaMinWidth, Styling } = B;
     const style = new Styling(theme);
-    const isDev = env === 'dev';
     const getSpacing = (idx, device = 'Mobile') =>
       idx === '0' ? '0rem' : style.getSpacing(idx, device);
+
+    const getPath = (path, data) =>
+      path.reduce((acc, next) => {
+        if (acc === undefined || acc[next] === undefined) {
+          return undefined;
+        }
+        return acc[next];
+      }, data);
 
     return {
       root: {
@@ -286,6 +244,20 @@
           getSpacing(outerSpacing[2]),
         marginLeft: ({ options: { outerSpacing } }) =>
           getSpacing(outerSpacing[3]),
+        textAlign: ({ options: { textAlignment } }) => textAlignment,
+        padding: 0,
+        color: ({ options: { textColor, type, styles } }) =>
+          styles
+            ? style.getColor(textColor)
+            : getPath(['theme', 'typography', type, 'color'], style),
+        fontFamily: ({ options: { type } }) => style.getFontFamily(type),
+        fontSize: ({ options: { type } }) => style.getFontSize(type),
+        fontWeight: ({ options: { fontWeight, type, styles } }) =>
+          styles
+            ? fontWeight
+            : getPath(['theme', 'typography', type, 'fontWeight'], style),
+        textTransform: ({ options: { type } }) => style.getTextTransform(type),
+        letterSpacing: ({ options: { type } }) => style.getLetterSpacing(type),
       },
       '@keyframes loading': {
         to: {
