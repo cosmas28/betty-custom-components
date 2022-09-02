@@ -63,6 +63,15 @@
           },
         },
         {
+          type: 'VARIABLE',
+          label: 'Description',
+          key: 'description',
+          value: [],
+          configuration: {
+            as: 'MULTILINE'
+          }
+        },
+        {
           value: ['0rem', '0rem', 'M', '0rem'],
           label: 'Outer space',
           key: 'outerSpacing',

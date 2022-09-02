@@ -17,9 +17,11 @@
       filter,
       showError,
       dataComponentAttribute,
+      description,
     } = options;
     const displayError = showError === 'built-in';
 
+    const parsedDescription = useText(description);
     const skipAppend = useRef(false);
     const [skip, setSkip] = useState(0);
     const [search, setSearch] = useState('');
@@ -216,7 +218,7 @@
         className={classes.root}
         data-component={useText(dataComponentAttribute) || 'DataCount'}
       >
-        {totalCount}
+        {parsedDescription + totalCount}
       </div>
     );
   })(),
