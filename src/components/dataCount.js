@@ -18,7 +18,19 @@
       showError,
       dataComponentAttribute,
       description,
+      type
     } = options;
+    const Tag = {
+      Title1: 'h1',
+      Title2: 'h2',
+      Title3: 'h3',
+      Title4: 'h4',
+      Title5: 'h5',
+      Title6: 'h6',
+      Body1: 'p',
+      Body2: 'p',
+    }[type || 'Body1'];
+
     const displayError = showError === 'built-in';
 
     const parsedDescription = useText(description);
@@ -214,13 +226,13 @@
     }, [loading]);
 
     return (
-      <div
-        className={classes.root}
+      <Tag
+        className={classes.content}
         data-component={useText(dataComponentAttribute) || 'DataCount'}
       >
         {parsedDescription + totalCount}
-      </div>
-    );
+      </Tag>
+    )
   })(),
   styles: (B) => (theme) => {
     const { env, mediaMinWidth, Styling } = B;
@@ -228,16 +240,9 @@
     const getSpacing = (idx, device = 'Mobile') =>
       idx === '0' ? '0rem' : style.getSpacing(idx, device);
 
-    const getPath = (path, data) =>
-      path.reduce((acc, next) => {
-        if (acc === undefined || acc[next] === undefined) {
-          return undefined;
-        }
-        return acc[next];
-      }, data);
-
     return {
-      root: {
+      content: {
+        display: 'block',
         marginTop: ({ options: { outerSpacing } }) =>
           getSpacing(outerSpacing[0]),
         marginRight: ({ options: { outerSpacing } }) =>
@@ -248,16 +253,10 @@
           getSpacing(outerSpacing[3]),
         textAlign: ({ options: { textAlignment } }) => textAlignment,
         padding: 0,
-        color: ({ options: { textColor, type, styles } }) =>
-          styles
-            ? style.getColor(textColor)
-            : getPath(['theme', 'typography', type, 'color'], style),
+        color: ({ options: { textColor } }) => style.getColor(textColor),
         fontFamily: ({ options: { type } }) => style.getFontFamily(type),
         fontSize: ({ options: { type } }) => style.getFontSize(type),
-        fontWeight: ({ options: { fontWeight, type, styles } }) =>
-          styles
-            ? fontWeight
-            : getPath(['theme', 'typography', type, 'fontWeight'], style),
+        fontWeight: ({ options: { fontWeight } }) => fontWeight,
         textTransform: ({ options: { type } }) => style.getTextTransform(type),
         letterSpacing: ({ options: { type } }) => style.getLetterSpacing(type),
       },
@@ -267,7 +266,7 @@
         },
       },
       [`@media ${mediaMinWidth(600)}`]: {
-        root: {
+        content: {
           marginTop: ({ options: { outerSpacing } }) =>
             getSpacing(outerSpacing[0], 'Portrait'),
           marginRight: ({ options: { outerSpacing } }) =>
@@ -279,7 +278,7 @@
         },
       },
       [`@media ${mediaMinWidth(960)}`]: {
-        root: {
+        content: {
           marginTop: ({ options: { outerSpacing } }) =>
             getSpacing(outerSpacing[0], 'Landscape'),
           marginRight: ({ options: { outerSpacing } }) =>
@@ -291,7 +290,7 @@
         },
       },
       [`@media ${mediaMinWidth(1280)}`]: {
-        root: {
+        content: {
           marginTop: ({ options: { outerSpacing } }) =>
             getSpacing(outerSpacing[0], 'Desktop'),
           marginRight: ({ options: { outerSpacing } }) =>
