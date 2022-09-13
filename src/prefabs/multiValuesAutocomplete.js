@@ -17,10 +17,10 @@
           },
         },
 				{
-          value: '',
+          type: 'MODEL_AND_RELATION',
           label: 'Default Values Model',
           key: 'defaultValuesModel',
-          type: 'MODEL',
+          value: '',
           configuration: {
             condition: {
               type: 'SHOW',
