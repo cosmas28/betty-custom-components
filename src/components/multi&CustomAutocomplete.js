@@ -467,6 +467,14 @@
     }
 
     const { results } = data || {}
+
+    useEffect(() => {
+      if (hasResults) {
+        const actualDefaultVales = results.map((result) => result[suggestionsProp.name]);
+        setValue(actualDefaultVales)
+      }
+    }, [hasResults])
+
     if (error && displayError) {
       valid = false;
       message = error;
@@ -566,21 +574,22 @@
     }
 
     const getOptions = () => {
+      const optionResults = allData !== undefined ? allData : results
       if (optionType === 'property') {
         return propertyValues.map((propertyValue) => propertyValue.value);
       }
 
       if (optionType === 'model') {
-        if (!results) {
+        if (!optionResults) {
           return [];
         }
 
         // If freeSolo is turned on the value and options are strings instead of objects
         if (freeSolo) {
-          return results.map((result) => result[suggestionsProp.name]);
+          return optionResults.map((result) => result[suggestionsProp.name]);
         }
 
-        return results;
+        return optionResults;
       }
 
       return [];
