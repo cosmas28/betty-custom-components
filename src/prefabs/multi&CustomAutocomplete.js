@@ -1,11 +1,11 @@
 (() => ({
-  name: 'TTF Multi. & Custom',
+  name: 'TTF Multi Select Autocomplete with relation' ,
   icon: 'AutoCompleteIcon',
   category: 'FORM',
   keywords: ['Form', 'input', 'auto', 'complete', 'autocomplete'],
   structure: [
     {
-      name: 'TTF Multi & Custom Autocomplete',
+      name: 'TTF Multi Select Autocomplete',
       options: [
         {
           value: { label: ['Autocomplete'], value: [] },
@@ -212,6 +212,12 @@
               value: 'model',
             },
           },
+        },
+        {
+          type: 'NUMBER',
+          label: 'Total options',
+          key: 'take',
+          value: 20
         },
         {
           type: 'TOGGLE',

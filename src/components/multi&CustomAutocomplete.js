@@ -1,5 +1,5 @@
 (() => ({
-  name: 'TTF Multi & Custom Autocomplete',
+  name: 'TTF Multi Select Autocomplete',
   type: 'CONTENT_COMPONENT',
   allowedTypes: [],
   orientation: 'HORIZONTAL',
@@ -59,6 +59,7 @@
       pattern,
       minvalue,
       type,
+      take
     } = options;
     const numberPropTypes = ['serial', 'minutes', 'count', 'integer'];
 
@@ -414,7 +415,7 @@
     } = useAllQuery(
       model,
       {
-        take: 20,
+        take: take || 20,
         rawFilter: mergeFilters(filter, resolvedExternalFiltersObject),
         variables: {
           sort,
@@ -438,7 +439,9 @@
 
     const { hasResults, data: relationData } = useRelation(
       model,
-      {},
+      {
+        take: take || 20,
+      },
       typeof model === 'string' || !model,
     );
 
